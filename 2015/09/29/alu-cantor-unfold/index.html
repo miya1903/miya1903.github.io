@@ -1,0 +1,786 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0">
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+    <meta name="description" content="Every single day without dancing is one day we betrayed of life.">
+
+
+
+  <meta name="keywords" content="alu,">
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/bitbug_favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="算法描述把一个整数 X 展开成如下形式： X = a[n] * (n-1)! + a[n-1] * (n-2)! + ... + a[i] * (i-1)! + ... + a[1] * 0!  其中，a[i] 为整数，并且 0 &amp;lt;= a[i] &amp;lt; i (1 &amp;lt;= i &amp;lt;= n)适用领域范围：解决一些序列问题的算法． 实例一{1,2,3,4,…,n} 表示 1,2,3,…,">
+<meta name="keywords" content="alu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="康托展开（Cantor expansion）">
+<meta property="og:url" content="http://sujerry.com/2015/09/29/alu-cantor-unfold/index.html">
+<meta property="og:site_name" content="SuJerry&#39;s Blog">
+<meta property="og:description" content="算法描述把一个整数 X 展开成如下形式： X = a[n] * (n-1)! + a[n-1] * (n-2)! + ... + a[i] * (i-1)! + ... + a[1] * 0!  其中，a[i] 为整数，并且 0 &amp;lt;= a[i] &amp;lt; i (1 &amp;lt;= i &amp;lt;= n)适用领域范围：解决一些序列问题的算法． 实例一{1,2,3,4,…,n} 表示 1,2,3,…,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-12T22:35:08.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="康托展开（Cantor expansion）">
+<meta name="twitter:description" content="算法描述把一个整数 X 展开成如下形式： X = a[n] * (n-1)! + a[n-1] * (n-2)! + ... + a[i] * (i-1)! + ... + a[1] * 0!  其中，a[i] 为整数，并且 0 &amp;lt;= a[i] &amp;lt; i (1 &amp;lt;= i &amp;lt;= n)适用领域范围：解决一些序列问题的算法． 实例一{1,2,3,4,…,n} 表示 1,2,3,…,">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 康托展开（Cantor expansion） | SuJerry's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?8828472b36a6d76850b288afe56fdf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">SuJerry's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            Tags
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              康托展开（Cantor expansion）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          Posted on
+          <time itemprop="dateCreated" datetime="2015-09-29T14:34:12+08:00" content="2015-09-29">
+            2015-09-29
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; In
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/ALU/" itemprop="url" rel="index">
+                  <span itemprop="name">ALU</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/29/alu-cantor-unfold/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/29/alu-cantor-unfold/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>把一个整数 X 展开成如下形式：</p>
+<pre><code>X = a[n] * (n-1)! + a[n-1] * (n-2)! + ... + a[i] * (i-1)! + ... + a[1] * 0!
+
+其中，a[i] 为整数，并且 0 &lt;= a[i] &lt; i (1 &lt;= i &lt;= n)</code></pre><p>适用领域范围：解决一些序列问题的算法．</p>
+<h2 id="实例一"><a href="#实例一" class="headerlink" title="实例一"></a>实例一</h2><p>{1,2,3,4,…,n} 表示 1,2,3,…,n 的排列．如 {1,2,3} 按从小到大排列一共6个：123, 132, 213, 231, 312, 321．代表它们的数字是：1, 2, 3, 4, 5, 6，也就是把10进制的某个数与一个排列对应起来．</p>
+<p>他们间的对应关系可由康托展开来找到．</p>
+<p>如我想知道 321 是 {1,2,3} 中第几个小的数时，可以这样考虑：</p>
+<pre><code>第一位是3：小于3的数有1、2．所以有2*2!个；
+
+第二位是2：小于2的数只有一个就是1，所以有1*1!=1；
+
+第三位是1：小于1的数有0个，也就是0*0!=0；
+
+所以小于321的{1,2,3}排列数有2*2!+1*1!=5个；
+
+所以321是第6个小的数。 
+
+2*2!+1*1!+0*0!就是康托展开。</code></pre><p>再举个例子：1324是{1,2,3,4}排列数中第几个大的数：</p>
+<pre><code>第一位是1，小于1的数没有，是0个，0*3! 
+
+第二位是3，小于3的数有1和2，但1已经在第一位了，所以只有一个数2，1*2! 。
+
+第三位是2，小于2的数是1，但1在第一位，所以有0个数，0*1! ，
+
+所以比1324小的排列有0*3!+1*2!+0*1!=2个，1324是第三个小数。</code></pre><p>C 语言代码实现：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数 int s[] 为待展开之数的各位数字，如需展开2134，则s[4] = &#123;2,1,3,4&#125;</span></span><br><span class="line"><span class="comment">//参数 n 为待展开的数字个数，这里是4</span></span><br><span class="line"><span class="comment">//阶乘表 long int fac[] = &#123;1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880&#125;</span></span><br><span class="line"></span><br><span class="line">long cantor(<span class="built_in">int</span> s[], <span class="built_in">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    long <span class="built_in">int</span> i, j, temp, <span class="built_in">num</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">num</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> j=i+<span class="number">1</span>; j&lt;n; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[j]&lt;s[i])</span><br><span class="line">                temp++; <span class="comment">//判断几个数小于它</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">num</span> += fac[n-i<span class="number">-1</span>] * temp;   <span class="comment">//(或num = num + fac[n-i-1] * temp;)</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">num</span>+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例二"><a href="#实例二" class="headerlink" title="实例二"></a>实例二</h2><p>在魔方风靡全球之后不久，Rubik先生发明了它的简化版――魔板。魔板由 8 个同样大小的方块组成，每个方块颜色均不相同，可用数字 1-8 分别表示。任一时刻魔板的状态可用方块的颜色序列表示：从魔板的左上角开始，按顺时针方 向依次写下各方块的颜色代号，所得到的数字序列即可表示此时魔板的状态。</p>
+<p>例如，序列(1,2,3,4,5,6,7,8)表示魔板状态为： </p>
+<pre><code>1 2 3 4 
+8 7 6 5 </code></pre><p>对于魔板，可施加三种不同的操作，具体操作方法如下： </p>
+<pre><code>A: 上下两行互换，如上图可变换为状态87654321
+
+B: 每行同时循环右移一格，如上图可变换为41236785 
+
+C: 中间4个方块顺时针旋转一格，如上图可变换为17245368 </code></pre><p>给你魔板的初始状态与目标状态，请给出由初态到目态变换数最少的变换步骤，若有多种变换方案则取字典序最小的那种．</p>
+<p>解题思路：</p>
+<pre><code>1: 把初始状态转换成 12345678 这个状态
+
+2: 把目标状态按照初始状态的转换进行转换
+
+    例如：初始状态为 63728145，目标状态为 86372541
+
+    将初始状态转换为 12345678，目标状态相应转化为 51234876
+
+    注释：初始状态6在1的位置上，将初始状态和目标状态中的6都用1代替，一次类推．
+
+3: 使用康托展开和广度优先算法生成从12345678这个状态到其他所有状态的路径，即：8!种
+
+   注释：使用广度优先可以确保从12345678这个状态转换到的任何其他状态所经过的变换是最少的，这样就可以
+
+   保证最后结果是我们需要的字典序最小的那种．</code></pre><p>代码：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;<span class="type">string</span>&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line"></span><br><span class="line">using namespace std; </span><br><span class="line"></span><br><span class="line">const int MAXN = <span class="number">40321</span>; <span class="comment">//由于此题数字1~8，康托展开的所有情况为8!，共40320种 </span></span><br><span class="line">const int fac[<span class="number">8</span>] = &#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">24</span>,<span class="number">120</span>,<span class="number">720</span>,<span class="number">5040</span>&#125;; <span class="comment">//康托展开中用到的0~7的阶乘 </span></span><br><span class="line"><span class="type">string</span> ans[MAXN]; <span class="comment">//存储各状态的变化步骤，预处理完成 </span></span><br><span class="line"></span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int a[<span class="number">8</span>];</span><br><span class="line">    int n;</span><br><span class="line">&#125;u,v;</span><br><span class="line"></span><br><span class="line">void A(node &amp;t) <span class="comment">//A操作 </span></span><br><span class="line">&#123;</span><br><span class="line">    swap(t.a[<span class="number">0</span>],t.a[<span class="number">7</span>]); </span><br><span class="line">    swap(t.a[<span class="number">1</span>],t.a[<span class="number">6</span>]); </span><br><span class="line">    swap(t.a[<span class="number">2</span>],t.a[<span class="number">5</span>]); </span><br><span class="line">    swap(t.a[<span class="number">3</span>],t.a[<span class="number">4</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void B(node &amp;t) <span class="comment">//B操作 </span></span><br><span class="line">&#123;</span><br><span class="line">    swap(t.a[<span class="number">3</span>],t.a[<span class="number">2</span>]); </span><br><span class="line">    swap(t.a[<span class="number">2</span>],t.a[<span class="number">1</span>]); </span><br><span class="line">    swap(t.a[<span class="number">1</span>],t.a[<span class="number">0</span>]); </span><br><span class="line">    swap(t.a[<span class="number">4</span>],t.a[<span class="number">5</span>]); </span><br><span class="line">    swap(t.a[<span class="number">5</span>],t.a[<span class="number">6</span>]); </span><br><span class="line">    swap(t.a[<span class="number">6</span>],t.a[<span class="number">7</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void C(node &amp;t) <span class="comment">//C操作 </span></span><br><span class="line">&#123;</span><br><span class="line">    swap(t.a[<span class="number">1</span>],t.a[<span class="number">6</span>]); </span><br><span class="line">    swap(t.a[<span class="number">6</span>],t.a[<span class="number">5</span>]); </span><br><span class="line">    swap(t.a[<span class="number">5</span>],t.a[<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int contor(node &amp;t) <span class="comment">//康托展开</span></span><br><span class="line">&#123;</span><br><span class="line">    int tmp, num = <span class="number">0</span>;</span><br><span class="line">    for(int i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp = <span class="number">0</span>;</span><br><span class="line">        for(int j=i+<span class="number">1</span>; j&lt;<span class="number">8</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(t.a[j] &lt; t.a[i])</span><br><span class="line">                tmp++;</span><br><span class="line">        &#125;</span><br><span class="line">        num += tmp*fac[<span class="number">7</span>-i];</span><br><span class="line">    &#125;</span><br><span class="line">    return num;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">void Init(void)</span><br><span class="line">&#123;</span><br><span class="line">    void (*ptr[<span class="number">3</span>])(node&amp;); <span class="comment">//定义函数指针 </span></span><br><span class="line">    ptr[<span class="number">0</span>] = A; ptr[<span class="number">1</span>] = B; ptr[<span class="number">2</span>] = C; <span class="comment">//指向对应函数方便处理 </span></span><br><span class="line"></span><br><span class="line">    int mark[MAXN] = &#123;<span class="number">0</span>&#125;; <span class="comment">//设置标记 </span></span><br><span class="line"></span><br><span class="line">    mark[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    for(int i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++) <span class="comment">//由初始状态12345678开始 </span></span><br><span class="line">        u.a[i] = i+<span class="number">1</span>;</span><br><span class="line">      </span><br><span class="line">    u.n = contor(u);</span><br><span class="line"></span><br><span class="line">    queue&lt;node&gt;que;</span><br><span class="line">    que.push(u);</span><br><span class="line">    while(!que.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        u = que.front();</span><br><span class="line">        que.pop(); </span><br><span class="line">        for(int i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++) <span class="comment">//三种变换 </span></span><br><span class="line">        &#123;</span><br><span class="line">            v = u;</span><br><span class="line">            (*ptr[i])(v);</span><br><span class="line">            v.n = contor(v); <span class="comment">//对副本执行操作并康托展开 </span></span><br><span class="line">            if(mark[v.n] == <span class="number">0</span>) <span class="comment">//重复 </span></span><br><span class="line">            &#123;</span><br><span class="line">                char ch = 'A' + i;</span><br><span class="line">                ans[v.n] = ans[u.n] + ch; <span class="comment">//记录步骤 </span></span><br><span class="line"></span><br><span class="line">                mark[v.n] = <span class="number">1</span>; <span class="comment">//标记 </span></span><br><span class="line">                que.push(v);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Init();</span><br><span class="line">    <span class="type">string</span> str1, str2;</span><br><span class="line">    char a[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;, b[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        </span><br><span class="line">    while(cin &gt;&gt; str1 &gt;&gt; str2)</span><br><span class="line">    &#123;</span><br><span class="line">        int n[<span class="number">10</span>];</span><br><span class="line">            </span><br><span class="line">        for(int i=<span class="number">0</span>; i&lt;<span class="number">8</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            a[i] = str1[i] - '<span class="number">0</span>';</span><br><span class="line">            b[i] = str2[i] - '<span class="number">0</span>';</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for(int i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++) <span class="comment">//把初态置换成12345678 </span></span><br><span class="line">            n[a[i]-'<span class="number">0</span>'] = i+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        for(int i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++) <span class="comment">//把目标状态相对于初态置换 </span></span><br><span class="line">            u.a[i] = n[b[i]-'<span class="number">0</span>'];</span><br><span class="line">              </span><br><span class="line">        cout &lt;&lt; ans[contor(u)] &lt;&lt; endl; <span class="comment">//输出由12345678到目标态的步骤 </span></span><br><span class="line">    &#125;</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/alu/" rel="tag">#alu</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/30/alu-cantor-r-unfold/" rel="prev">康托逆展开（Cantor inverse expansion）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/29/python-5/" rel="next">Python Chapter 5 条件、循环和其他语句</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/29/alu-cantor-unfold/" data-title="康托展开（Cantor expansion）" data-url="http://sujerry.com/2015/09/29/alu-cantor-unfold/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/tempo.jpg" alt="Jerry Wang" itemprop="image">
+          <p class="site-author-name" itemprop="name">Jerry Wang</p>
+        </div>
+
+        <p class="site-description motion-element" itemprop="description">Every single day without dancing is one day we betrayed of life.</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/miya1903" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1955496293" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.kennethreitz.org/" target="_blank">kennethreitz</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.cyberciti.biz/" target="_blank">nixCraft</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.cnblogs.com/peida/" target="_blank">Peida</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blog.csdn.net/sunboy_2050" target="_blank">Sunboy</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://qianduanblog.com/" target="_blank">QDBlog</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://heroicyang.com/" target="_blank">Hero</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.skymoon.biz/" target="_blank">Skymoon</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.kuangbin.net/" target="_blank">KuangBin</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blog.csdn.net/lttree" target="_blank">LTtree</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://yife.im/" target="_blank">FlyingBull</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法描述"><span class="nav-number">1.</span> <span class="nav-text">算法描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例一"><span class="nav-number">2.</span> <span class="nav-text">实例一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例二"><span class="nav-number">3.</span> <span class="nav-text">实例二</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" align="center">
+  
+  &copy; &nbsp;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerry Wang</span>
+</div>
+
+<!--jerrywang
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+-->
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sujerry"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
