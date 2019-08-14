@@ -34,7 +34,7 @@
 
 
 
-  <meta name="keywords" content="linux,">
+  <meta name="keywords" content="Hexo,next">
 
 
 
@@ -43,18 +43,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/bitbug_favicon.ico?v=0.4.5.1">
 
 
-<meta name="description" content="什么是Coredump当程序运行的过程中异常终止或崩溃，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，这种行为就叫做Core Dump（中文有的翻译成“核心转储）。 Coredump产生原因1. 内存访问越界 2. 多线程程序使用了线程不安全的函数 3. 多线程读写的数据未加锁保护 4. 非法指针     - 使用空指针     - 滥用指针转换 5. 堆栈溢出如何打开Coredump">
-<meta name="keywords" content="linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Linux coredump">
-<meta property="og:url" content="http://sujerry.com/2018/07/22/coredump/index.html">
+<meta name="description" content="Every single day without dancing is one day we betrayed of life.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SuJerry&#39;s Blog">
+<meta property="og:url" content="http://sujerry.com/tags/C/index.html">
 <meta property="og:site_name" content="SuJerry&#39;s Blog">
-<meta property="og:description" content="什么是Coredump当程序运行的过程中异常终止或崩溃，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，这种行为就叫做Core Dump（中文有的翻译成“核心转储）。 Coredump产生原因1. 内存访问越界 2. 多线程程序使用了线程不安全的函数 3. 多线程读写的数据未加锁保护 4. 非法指针     - 使用空指针     - 滥用指针转换 5. 堆栈溢出如何打开Coredump">
+<meta property="og:description" content="Every single day without dancing is one day we betrayed of life.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-12T22:35:08.582Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux coredump">
-<meta name="twitter:description" content="什么是Coredump当程序运行的过程中异常终止或崩溃，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，这种行为就叫做Core Dump（中文有的翻译成“核心转储）。 Coredump产生原因1. 内存访问越界 2. 多线程程序使用了线程不安全的函数 3. 多线程读写的数据未加锁保护 4. 非法指针     - 使用空指针     - 滥用指针转换 5. 堆栈溢出如何打开Coredump">
+<meta name="twitter:title" content="SuJerry&#39;s Blog">
+<meta name="twitter:description" content="Every single day without dancing is one day we betrayed of life.">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -64,7 +62,7 @@
   };
 </script>
 
-  <title> Linux coredump | SuJerry's Blog </title>
+  <title> Tag: C++ | SuJerry's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -92,7 +90,7 @@
 
 
 
-  <div class="container one-column page-post-detail">
+  <div class="container one-column ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -169,129 +167,44 @@
       <div class="main-inner">
         <div id="content" class="content"> 
 
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              Linux coredump
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          Posted on
-          <time itemprop="dateCreated" datetime="2018-07-22T21:00:33+08:00" content="2018-07-22">
-            2018-07-22
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; In
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/Linux/" itemprop="url" rel="index">
-                  <span itemprop="name">Linux</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2018/07/22/coredump/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/22/coredump/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        <span itemprop="articleBody"><h2 id="什么是Coredump"><a href="#什么是Coredump" class="headerlink" title="什么是Coredump"></a>什么是Coredump</h2><p>当程序运行的过程中异常终止或崩溃，操作系统会将程序当时的内存状态记录下来，保存在一个文件中，这种行为就叫做Core Dump（中文有的翻译成“核心转储）。</p>
-<h2 id="Coredump产生原因"><a href="#Coredump产生原因" class="headerlink" title="Coredump产生原因"></a>Coredump产生原因</h2><pre><code>1. 内存访问越界
-2. 多线程程序使用了线程不安全的函数
-3. 多线程读写的数据未加锁保护
-4. 非法指针
-    - 使用空指针
-    - 滥用指针转换
-5. 堆栈溢出</code></pre><h2 id="如何打开Coredump"><a href="#如何打开Coredump" class="headerlink" title="如何打开Coredump"></a>如何打开Coredump</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 该命令输出0则说明没有打开core dump</span></span><br><span class="line"><span class="built_in">ulimit</span> -c</span><br></pre></td></tr></table></figure>
-
-</span>
-      
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2>
+        C++
+        <small>Tag</small>
+      </h2>
     </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/linux/" rel="tag">#linux</a>
-          
-        </div>
+    
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/04/c-array-init/" rel="prev">C 数组初始化</a>
-            
-          </div>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/11/29/cpp-1/" rel="next">C++ Primer Chapter 1</a>
-            
-          </div>
-        </div>
-      
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/11/29/cpp-1/" itemprop="url">
+              <span itemprop="name">C++ Primer Chapter 1</span>
+            </a>
+        
+      </h1>
 
-      
-      
-    </footer>
+      <div class="post-meta">
+        <time class="post-time" datetime="2015-11-29T01:32:51.000Z" itemprop="dateCreated" content="2015-11-29"> 11-29 </time>
+      </div>
+
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
 
+  
  </div>
 
         
 
-        
-          <div class="comments" id="comments">
-            
-              <div class="ds-thread" data-thread-key="2018/07/22/coredump/" data-title="Linux coredump" data-url="http://sujerry.com/2018/07/22/coredump/">
-              </div>
-            
-          </div>
         
       </div>
 
@@ -308,15 +221,6 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table Of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
       
 
       <section class="site-overview">
@@ -429,17 +333,6 @@
       </section>
 
       
-        <section class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Coredump"><span class="nav-number">1.</span> <span class="nav-text">什么是Coredump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coredump产生原因"><span class="nav-number">2.</span> <span class="nav-text">Coredump产生原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何打开Coredump"><span class="nav-number">3.</span> <span class="nav-text">如何打开Coredump</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </section>
-      
 
     </div>
   </aside>
@@ -485,6 +378,12 @@
   
   
   
+    <script type="text/javascript">
+      postMotionOptions = {stagger: 100, drag: true};
+    </script>
+  
+
+  
     
 
   
@@ -527,165 +426,6 @@
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    var $tocContent = $('.post-toc-content');
-    if (isDesktop() && CONFIG.sidebar === 'post') {
-      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-        displaySidebar();
-      }
-    }
-  });
-</script>
-
-
 
   <script type="text/javascript">
     $(document).ready(function () {
